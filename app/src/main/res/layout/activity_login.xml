@@ -25,6 +25,25 @@
         android:hint="@string/login_password"
         android:inputType="textPassword"
         android:layout_marginTop="16dp"
+        android:layout_below="@id/login_user"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Space
+            android:visibility="visible"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <Button
+            android:layout_weight="1"
+            android:textAllCaps="false"
+            android:text="@string/Login"
+            android:id="@+id/login_btnlogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 </RelativeLayout>
