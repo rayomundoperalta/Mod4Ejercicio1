@@ -16,6 +16,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activity_Fragmentos"></activity>
+        <activity android:name=".Activity_Lista"></activity>
     </application>
 
 </manifest>

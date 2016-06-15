@@ -62,7 +62,7 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
                 wLoading.setVisibility(View.GONE);
                 for (int i = 0; i < 2; i++) {
                     if (user.equals(usuarios[i]) && pass.equals(claves[i])) {
-                        SystemMsg.msg(getApplicationContext(), "Login ok " + String.valueOf(user.charAt(0)));
+                        SystemMsg.msg(getApplicationContext(), "Login Ok " + String.valueOf(user.charAt(0)));
                         loginOk = true;
                         Intent intent = new Intent(getApplicationContext(), Activity_Fragmentos.class);
                         intent.putExtra("usuario", user);
