@@ -9,6 +9,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="mx.peta.mod4ejercicio1.Activity_Login">
 
+    <!-- Usamos el mismo disseño de pantalla de la clase -->
     <ProgressBar
         android:layout_centerInParent="true"
         android:visibility="gone"
