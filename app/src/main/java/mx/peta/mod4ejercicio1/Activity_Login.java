@@ -1,12 +1,11 @@
 package mx.peta.mod4ejercicio1;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-
-import java.util.concurrent.TimeUnit;
 
 import mx.peta.mod4ejercicio1.utileria.SystemMsg;
 
@@ -17,6 +16,8 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
     private EditText wUser;
     private EditText wPassword;
     private View     wLoading;
+    private String[] usuarios = new String[2];
+    private String[] claves   = new String[2];
 
     /* la inicialización la provee el IDE */
     @Override
@@ -49,19 +50,30 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
     private void processData() {
         final String user = wUser.getText().toString();
         final String pass = wPassword.getText().toString();
+
+        usuarios[0] = "aura"; claves[0] = "pass1";
+        usuarios[1] = "rayo"; claves[1] = "pass2";
+
         wLoading.setVisibility(View.VISIBLE);
-        try {
-            TimeUnit.SECONDS.sleep(1);
-        } catch (InterruptedException e) {
-            SystemMsg.msg(getApplicationContext(), "The Clock has been interrupted");
-        }
-        wLoading.setVisibility(View.GONE);
-        if (user.equals("user1") && pass.equals("pass1")) {
-            SystemMsg.msg(getApplicationContext(), "Login ok");
-            Intent intent = new Intent(getApplicationContext(), Activity_Fragmentos.class);
-            intent.putExtra("usuario", user);
-            startActivity(intent);
-        } else
-            SystemMsg.msg(getApplicationContext(), "User not known");
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                boolean loginOk = false;
+                wLoading.setVisibility(View.GONE);
+                for (int i = 0; i < 2; i++) {
+                    if (user.equals(usuarios[i]) && pass.equals(claves[i])) {
+                        SystemMsg.msg(getApplicationContext(), "Login ok " + String.valueOf(user.charAt(0)));
+                        loginOk = true;
+                        Intent intent = new Intent(getApplicationContext(), Activity_Fragmentos.class);
+                        intent.putExtra("usuario", user);
+                        startActivity(intent);
+                        break;
+                    }
+                }
+                if (!loginOk)
+                    SystemMsg.msg(getApplicationContext(), "User not known");
+            }
+        }, 1000);
+
     }
 }

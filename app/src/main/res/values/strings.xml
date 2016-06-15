@@ -3,4 +3,6 @@
     <string name="login_user">User</string>
     <string name="login_password">Password</string>
     <string name="Login">Login</string>
+    <string name="fragmentos_uno">Fragment 1</string>
+    <string name="fragmentos_dos">Fragment 2</string>
 </resources>
