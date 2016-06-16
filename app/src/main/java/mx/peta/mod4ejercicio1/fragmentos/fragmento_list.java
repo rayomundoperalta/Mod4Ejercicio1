@@ -60,6 +60,7 @@ public class Fragmento_List extends Fragment {
                 ModelItem modelItem2 = array.get(position);
                 /* llamamos a la tercer activity y le pasamos como parametrp un ModelItem */
                 Intent intent = new Intent(getActivity().getApplicationContext(), Activity_Lista.class);
+                //Intent intent = new Intent(getContext(), Activity_Lista.class); // funciona en api 23
                 intent.putExtra("ModelItem_id", modelItem2.id);
                 intent.putExtra("ModelItem_item", modelItem2.item);
                 intent.putExtra("ModelItem_resourceId", modelItem2.resourceId);
