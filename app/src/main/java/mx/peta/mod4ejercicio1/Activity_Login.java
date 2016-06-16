@@ -51,6 +51,7 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
         final String user = wUser.getText().toString();
         final String pass = wPassword.getText().toString();
 
+        /* Esta es la base de datos de usuarios */
         usuarios[0] = "aura"; claves[0] = "pass1";
         usuarios[1] = "rayo"; claves[1] = "pass2";
 
@@ -71,7 +72,7 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
                     }
                 }
                 if (!loginOk)
-                    SystemMsg.msg(getApplicationContext(), "User not known");
+                    SystemMsg.msg(getApplicationContext(), "Unkown user");
             }
         }, 1000);
 
