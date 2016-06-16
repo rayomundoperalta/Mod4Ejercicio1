@@ -19,6 +19,7 @@ public class Activity_Fragmentos extends AppCompatActivity implements View.OnCli
         findViewById(R.id.fragmentos_btnfragmentos2).setOnClickListener(this);
     }
 
+    /* cada vez que se da un tap en algun boton se llama esta rutina */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -33,11 +34,11 @@ public class Activity_Fragmentos extends AppCompatActivity implements View.OnCli
 
     private void processFragmento1() {
         /* Aqui estamos diciendo en donde se va a mostrar el frame */
-        Fragmento_Perfil f = Fragmento_Perfil.newInstance(user);
-        getFragmentManager().beginTransaction().replace(R.id.fragmentos_frmlayout1, f).commit();
+        getFragmentManager().beginTransaction().replace(R.id.fragmentos_frmlayout1, Fragmento_Perfil.newInstance(user)).commit();
     }
 
     private void processFragmento2() {
+        /* Aqui decimos que se va a mostrar en el frame */
         Fragmento_List f = new Fragmento_List();
         getFragmentManager().beginTransaction().replace(R.id.fragmentos_frmlayout2, f).commit();
     }
