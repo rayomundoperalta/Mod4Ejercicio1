@@ -15,7 +15,8 @@ import mx.peta.mod4ejercicio1.R;
  */
 public class Fragmento_Perfil extends Fragment {
     private ImageView imgPerfil;
-    final private char charDeCorte = 'n';
+    // final private char charDeCorte = 'n';
+
     /* En esta rutina ademas de crear el fragmento se e agregan los parametros que se desea
        pasarle, el fragmento no hereda parametros de parte de la actividad, es necesario
        pasarlos....
@@ -41,7 +42,7 @@ public class Fragmento_Perfil extends Fragment {
         else
             user = "XML Inflate";
         texto.setText(user);
-        if (user.charAt(0) < charDeCorte)
+        if ((('a' <= user.charAt(0)) && (user.charAt(0) < 'n')) || (('A' <= user.charAt(0)) && (user.charAt(0) < 'N')))
             imgPerfil.setImageResource(R.drawable.man);
         else
             imgPerfil.setImageResource(R.drawable.radio);

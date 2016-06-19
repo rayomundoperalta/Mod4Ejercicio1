@@ -16,8 +16,8 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
     private EditText wUser;
     private EditText wPassword;
     private View     wLoading;
-    private String[] usuarios = new String[2];
-    private String[] claves   = new String[2];
+    private String[] usuarios = new String[4];
+    private String[] claves   = new String[4];
 
     /* la inicialización la provee el IDE */
     @Override
@@ -54,6 +54,8 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
         /* Esta es la base de datos de usuarios */
         usuarios[0] = "aura"; claves[0] = "pass1";
         usuarios[1] = "rayo"; claves[1] = "pass2";
+        usuarios[2] = "AURA"; claves[2] = "pass3";
+        usuarios[3] = "RAYO"; claves[3] = "pass4";
 
         wLoading.setVisibility(View.VISIBLE);
         new Handler().postDelayed(new Runnable() {
@@ -61,7 +63,7 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
             public void run() {
                 boolean loginOk = false;
                 wLoading.setVisibility(View.GONE);
-                for (int i = 0; i < 2; i++) {
+                for (int i = 0; i < 4; i++) {
                     if (user.equals(usuarios[i]) && pass.equals(claves[i])) {
                         SystemMsg.msg(getApplicationContext(), "Login Ok " + String.valueOf(user.charAt(0)));
                         loginOk = true;
