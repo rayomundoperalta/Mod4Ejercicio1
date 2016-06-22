@@ -17,6 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <EditText
+        android:inputType="textNoSuggestions"
         android:id="@+id/login_user"
         android:hint="@string/login_user"
         android:layout_width="match_parent"
@@ -29,19 +30,39 @@
         android:layout_below="@id/login_user"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-    <CheckBox
-        android:id="@+id/recordarLogin"
-        android:text="Recordar Login"
+    <LinearLayout
+        android:layout_below="@+id/login_password"
+        android:id="@+id/campofecha"
         android:layout_marginTop="16dp"
-        android:layout_below="@id/login_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/campoUltimmoLogin"
+            android:layout_weight="1"
+            android:text="@string/fechaUltimoLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_weight="3"
+            android:id="@+id/fechaUltimoLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <CheckBox
+        android:layout_below="@id/campofecha"
+        android:layout_marginTop="16dp"
+        android:id="@+id/recordarLogin"
+        android:text="@string/RecordarLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-    <LinearLayout
+     <LinearLayout
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <Space
+        <Button
+            android:id="@+id/btnRegisterLogin"
+            android:text="@string/Register"
             android:visibility="visible"
             android:layout_weight="1"
             android:layout_width="match_parent"

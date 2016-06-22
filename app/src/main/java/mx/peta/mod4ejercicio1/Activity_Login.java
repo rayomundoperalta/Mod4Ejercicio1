@@ -7,7 +7,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import mx.peta.mod4ejercicio1.SQL.DataSource;
 import mx.peta.mod4ejercicio1.utileria.Preferences;
 import mx.peta.mod4ejercicio1.utileria.SystemMsg;
 
@@ -20,19 +25,24 @@ import mx.peta.mod4ejercicio1.utileria.SystemMsg;
    se puede insertar el codigo antes de llamar a la actividad que controla los fragmentos
  */
 public class Activity_Login extends AppCompatActivity implements View.OnClickListener {
-    private static final String USER_ID = "userID";
+    private static final String USER_ID    = "userID";
+    private static final String FECHA_HORA = "fechaHora";
     private EditText wUser;
     private EditText wPassword;
     private View     wLoading;
     private CheckBox wRecordarLogin;
+    private TextView wUltimoLogin;
+    private TextView wTextUltimoLogin;
     private String[] usuarios = new String[4];
     private String[] claves   = new String[4];
 
+    DataSource ds;
     /* la inicialización la provee el IDE */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        ds = new DataSource(getApplicationContext());
                 /* inicializamos los widgets para poder usarlos en la programación */
         wUser     = (EditText) findViewById(R.id.login_user);
         wPassword = (EditText) findViewById(R.id.login_password);
@@ -40,7 +50,10 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
         /* inicializamos el manejador de eventos del boton para enterarnos cuando sea oprimido */
         /* es necesario recordar que esta clase implementa el manejador de eventos */
         findViewById(R.id.login_btnlogin).setOnClickListener(this);
+        findViewById(R.id.btnRegisterLogin).setOnClickListener(this);
         wLoading = findViewById(R.id.login_progressbar);
+        wUltimoLogin = (TextView) findViewById(R.id.fechaUltimoLogin);
+        wTextUltimoLogin = (TextView) findViewById(R.id.campoUltimmoLogin);
     }
 
     @Override
@@ -48,8 +61,15 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
         super.onResume();
         Preferences p = new Preferences(getApplicationContext());
         /* mostramos el último login válido */
-        String user = p.getStringItem(USER_ID);
+        String user      = p.getStringItem(USER_ID);
+        String fechaHora = p.getStringItem(FECHA_HORA);
         wUser.setText(user != null ? user : "");
+        wUltimoLogin.setText(user != null ? fechaHora : "");
+        if (user == null)
+            wTextUltimoLogin.setVisibility(View.INVISIBLE);
+        else
+            wTextUltimoLogin.setVisibility(View.VISIBLE);
+        // el password siempre va en blanco
         wPassword.setText("");
     }
 
@@ -61,53 +81,46 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.login_btnlogin:
-                processData();
+                processLogin(Activity_Fragmentos.class);
+                break;
+            case R.id.btnRegisterLogin:
+                processLogin(Activity_Registro.class);
                 break;
         }
     }
 
     /* Esta rutina procesa el evento onClick del widget login_btnlogin */
-    private void processData() {
+    private void processLogin(Class<?> cls) {
         final String user = wUser.getText().toString();
         final String pass = wPassword.getText().toString();
 
-        /* Esta es la base de datos de usuarios */
-        usuarios[0] = "aura"; claves[0] = "pass1";
-        usuarios[1] = "rayo"; claves[1] = "pass2";
-        usuarios[2] = "AURA"; claves[2] = "pass3";
-        usuarios[3] = "RAYO"; claves[3] = "pass4";
-
-        wLoading.setVisibility(View.VISIBLE);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                boolean loginOk = false;
-                wLoading.setVisibility(View.GONE);
-                for (int i = 0; i < 4; i++) {
-                    if (user.equals(usuarios[i]) && pass.equals(claves[i])) {
-                        /*
-                            Por la forma como se van a hacer las verificaciones en este punto
-                            el usuario y el password no son nulos y tienen valores validos
-                            por lo tanto los podemos guardar en las preferencias como el último
-                            login valido
-                         */
-                        Preferences p = new Preferences(getApplicationContext());
-                        if (wRecordarLogin.isChecked())
-                            p.saveStringItem(USER_ID, user); // por seguridad solo se guarda el usuario
-                        else
-                            p.saveStringItem(USER_ID, ""); // esto es una desición de diseño
-                        SystemMsg.msg(getApplicationContext(), "Login Ok ");
-                        loginOk = true;
-                        Intent intent = new Intent(getApplicationContext(), Activity_Fragmentos.class);
-                        intent.putExtra("usuario", user);
-                        startActivity(intent);
-                        break;
-                    }
-                }
-                if (!loginOk)
-                    SystemMsg.msg(getApplicationContext(), "Unkown user");
+        String dbPassword = ds.getPassword(user);
+        if (dbPassword != null) {           // vemos si el usuario esta registrado
+            if (dbPassword.equals(pass)) {  // si afirmativo el password es correcto
+                /*
+                    Por la forma como se van a hacer las verificaciones en este punto
+                    el usuario y el password no son nulos y tienen valores validos
+                    por lo tanto los podemos guardar en las preferencias como el último
+                    login valido
+                    Primero traemos la fecha y la hora del login
+                    despuesto recordamos la información
+                */
+                SimpleDateFormat ff = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String fechaHora = ff.format(new Date());
+                Preferences p = new Preferences(getApplicationContext());
+                if (wRecordarLogin.isChecked()) {
+                    p.saveStringItem(USER_ID, user); // por seguridad solo se guarda el usuario
+                    p.saveStringItem(FECHA_HORA, fechaHora); // fecha y hora del ultimo login
+                } else
+                    p.saveStringItem(USER_ID, ""); // esto es una desición de diseño
+                Intent intent = new Intent(getApplicationContext(), cls);
+                intent.putExtra("usuario", user);
+                startActivity(intent);
+            } else {
+                SystemMsg.msg(getApplicationContext(), getString(R.string.passwordInvalido));
             }
-        }, 1000);
-
+        } else {
+            SystemMsg.msg(getApplicationContext(), getString(R.string.usuarioNoRegistrado));
+        }
     }
 }

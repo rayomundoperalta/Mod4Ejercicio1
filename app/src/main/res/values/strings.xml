@@ -3,6 +3,13 @@
     <string name="login_user">User</string>
     <string name="login_password">Password</string>
     <string name="Login">Login</string>
+    <string name="Register">Register</string>
     <string name="fragmentos_uno">Fragment 1</string>
     <string name="fragmentos_dos">Fragment 2</string>
+    <string name="fechaUltimoLogin">Last Login</string>
+    <string name="RecordarLogin">Remenber Login</string>
+    <string name="termino">Finish</string>
+    <string name="usuarioYaExiste">Username already in DB</string>
+    <string name="usuarioNoRegistrado">Unkown user</string>
+    <string name="passwordInvalido">Invalid password</string>
 </resources>

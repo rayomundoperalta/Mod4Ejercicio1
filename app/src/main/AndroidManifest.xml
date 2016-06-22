@@ -17,10 +17,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity_Fragmentos"
+        <activity
+            android:name=".Activity_Fragmentos"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".Activity_Lista"
+        <activity
+            android:name=".Activity_Lista"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".Activity_Registro"
             android:screenOrientation="portrait">
         </activity>
     </application>
