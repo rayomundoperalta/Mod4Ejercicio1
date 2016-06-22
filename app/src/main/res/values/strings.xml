@@ -11,5 +11,5 @@
     <string name="termino">Finish</string>
     <string name="usuarioYaExiste">Username already in DB</string>
     <string name="usuarioNoRegistrado">Unkown user</string>
-    <string name="passwordInvalido">Invalid password</string>
+    <string name="passwordInvalido">Invalid user or password</string>
 </resources>

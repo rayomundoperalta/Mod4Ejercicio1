@@ -33,11 +33,18 @@ public class Activity_Registro extends AppCompatActivity {
                     alta con anterioridad, para lo cual crecaremos primero si el usuario
                     tiene un password, si no hay password insertaremos al usuario
                  */
-
-                if (ds.getPassword(mUserName) == null)
-                    ds.writeUser(mUserName, password);
-                else
-                    SystemMsg.msg(getApplicationContext(),getString(R.string.usuarioYaExiste));
+                if (mUserName.isEmpty()) {
+                    SystemMsg.msg(getApplicationContext(), getString(R.string.passwordInvalido));
+                } else {
+                    if (password.isEmpty()){
+                        SystemMsg.msg(getApplicationContext(), getString(R.string.passwordInvalido));
+                    } else {
+                        if (ds.getPassword(mUserName) == null)
+                            ds.writeUser(mUserName, password);
+                        else
+                            SystemMsg.msg(getApplicationContext(),getString(R.string.usuarioYaExiste));
+                    }
+                }
                 // En cualquier caso borramos los campos de captura
                 mUser.setText("");
                 mPassword.setText("");
