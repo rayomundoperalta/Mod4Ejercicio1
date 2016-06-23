@@ -28,6 +28,8 @@
         <activity android:name=".Activity_Registro"
             android:screenOrientation="portrait">
         </activity>
+        <service
+            android:name=".service.ServiceTimer"/>
     </application>
 
 </manifest>

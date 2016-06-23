@@ -12,4 +12,7 @@
     <string name="usuarioYaExiste">Username already in DB</string>
     <string name="usuarioNoRegistrado">Unkown user</string>
     <string name="passwordInvalido">Invalid user or password</string>
+    <string name="end">END</string>
+    <string name="duracionSesion">Session lenght %s seconds</string>
+    <string name="lifespan">Use time</string>
 </resources>

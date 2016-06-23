@@ -20,11 +20,19 @@ public class Preferences {
         sp.edit().putString(key, value).apply();
     }
 
-    public String getStringItem(String Key) {
-        String value = sp.getString(Key, null);
+    public String getStringItem(String key) {
+        String value = sp.getString(key, null);
         if (TextUtils.isEmpty(value))
             return null;
         else
             return value;
+    }
+
+    public void saveLongItem(String key, long value) {
+        sp.edit().putLong(key, value).apply();
+    }
+
+    public long getLong(String key) {
+        return sp.getLong(key, -1);
     }
 }

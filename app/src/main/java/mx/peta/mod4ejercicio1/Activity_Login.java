@@ -1,18 +1,24 @@
 package mx.peta.mod4ejercicio1;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import mx.peta.mod4ejercicio1.SQL.DataSource;
+import mx.peta.mod4ejercicio1.service.ManejoTiempoDeVida;
+import mx.peta.mod4ejercicio1.service.ServiceTimer;
 import mx.peta.mod4ejercicio1.utileria.Preferences;
 import mx.peta.mod4ejercicio1.utileria.SystemMsg;
 
@@ -33,6 +39,7 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
     private CheckBox wRecordarLogin;
     private TextView wUltimoLogin;
     private TextView wTextUltimoLogin;
+    private TextView tdv;
     private String[] usuarios = new String[4];
     private String[] claves   = new String[4];
 
@@ -40,6 +47,7 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
     /* la inicialización la provee el IDE */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(ServiceTimer.SERVICIO_TIMER, "activity login onCreate ---------------------------------------------------");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ds = new DataSource(getApplicationContext());
@@ -51,9 +59,11 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
         /* es necesario recordar que esta clase implementa el manejador de eventos */
         findViewById(R.id.login_btnlogin).setOnClickListener(this);
         findViewById(R.id.btnRegisterLogin).setOnClickListener(this);
+        findViewById(R.id.login_btnEnd).setOnClickListener(this);
         wLoading = findViewById(R.id.login_progressbar);
         wUltimoLogin = (TextView) findViewById(R.id.fechaUltimoLogin);
         wTextUltimoLogin = (TextView) findViewById(R.id.campoUltimmoLogin);
+        tdv = (TextView) findViewById(R.id.tdv);
     }
 
     @Override
@@ -71,6 +81,8 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
             wTextUltimoLogin.setVisibility(View.VISIBLE);
         // el password siempre va en blanco
         wPassword.setText("");
+        tdv.setText(String.valueOf(p.getLong(ManejoTiempoDeVida.TIEMPO_DE_VIDA)) + " seg");
+        Log.d(ServiceTimer.SERVICIO_TIMER, " activity login on resume");
     }
 
     /* Este es el manejador de los eventos onClick, sera llamado por todos los widgets que
@@ -85,6 +97,11 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
                 break;
             case R.id.btnRegisterLogin:
                 processLogin(Activity_Registro.class);
+                break;
+            case R.id.login_btnEnd:
+                //finish();
+                int p = android.os.Process.myPid();
+                android.os.Process.killProcess(p);
                 break;
         }
     }
@@ -116,11 +133,25 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
                 Intent intent = new Intent(getApplicationContext(), cls);
                 intent.putExtra("usuario", user);
                 startActivity(intent);
+                startService(new Intent(getApplicationContext(), ServiceTimer.class));
             } else {
                 SystemMsg.msg(getApplicationContext(), getString(R.string.passwordInvalido));
             }
         } else {
             SystemMsg.msg(getApplicationContext(), getString(R.string.usuarioNoRegistrado));
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(ServiceTimer.SERVICIO_TIMER, " activity login on pause");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        Log.d(ServiceTimer.SERVICIO_TIMER, " activity login on destroy");
     }
 }

@@ -38,7 +38,7 @@ public class SqLiteHelper  extends SQLiteOpenHelper {
         try {
             ContentValues values = new ContentValues();
             values.put(USERS_COLUMN_USER, "Admin");
-            values.put(USERS_COLUMN_PASSWORD, "passwordAdmin");
+            values.put(USERS_COLUMN_PASSWORD, "password");
             db.insert(USERS_TABLE_NAME, null, values);
             db.setTransactionSuccessful();
         } finally {

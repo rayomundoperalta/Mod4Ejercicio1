@@ -1,12 +1,20 @@
 package mx.peta.mod4ejercicio1;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
 import mx.peta.mod4ejercicio1.SQL.DataSource;
+import mx.peta.mod4ejercicio1.service.ManejoTiempoDeVida;
+import mx.peta.mod4ejercicio1.service.ServiceTimer;
+import mx.peta.mod4ejercicio1.utileria.Preferences;
 import mx.peta.mod4ejercicio1.utileria.SystemMsg;
 
 /**
@@ -14,8 +22,17 @@ import mx.peta.mod4ejercicio1.utileria.SystemMsg;
  */
 public class Activity_Registro extends AppCompatActivity {
     DataSource ds;
+    long segundosActivo;
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            segundosActivo++;
+        }
+    };
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        Log.d(ServiceTimer.SERVICIO_TIMER, "activity Registro onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
         ds = new DataSource(getApplicationContext());
@@ -56,6 +73,38 @@ public class Activity_Registro extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(ServiceTimer.ACTION_SEND_TIMER);
+        registerReceiver(broadcastReceiver, filter);
+        segundosActivo = 0;
+        Log.d(ServiceTimer.SERVICIO_TIMER, " activity registro onResume");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(broadcastReceiver);
+        Preferences p = new Preferences(getApplicationContext());
+        long tdv = p.getLong(ManejoTiempoDeVida.TIEMPO_DE_VIDA);
+        if (tdv == -1)
+            p.saveLongItem(ManejoTiempoDeVida.TIEMPO_DE_VIDA, segundosActivo);
+        else {
+            tdv += segundosActivo;
+            p.saveLongItem(ManejoTiempoDeVida.TIEMPO_DE_VIDA, tdv);
+        }
+        Log.d(ServiceTimer.SERVICIO_TIMER, " activity registro onPause");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopService(new Intent(getApplicationContext(), ServiceTimer.class));
+        Log.d(ServiceTimer.SERVICIO_TIMER, " activity registro onDestroy");
     }
 }
 
