@@ -81,7 +81,9 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
             wTextUltimoLogin.setVisibility(View.VISIBLE);
         // el password siempre va en blanco
         wPassword.setText("");
-        tdv.setText(String.valueOf(p.getLong(ManejoTiempoDeVida.TIEMPO_DE_VIDA)) + " seg");
+        long lTdv = p.getLong(ManejoTiempoDeVida.TIEMPO_DE_VIDA);
+        lTdv = lTdv == -1 ? 0 : lTdv;
+        tdv.setText(String.valueOf(lTdv) + " " + getString(R.string.segundos));
         Log.d(ServiceTimer.SERVICIO_TIMER, " activity login on resume");
     }
 

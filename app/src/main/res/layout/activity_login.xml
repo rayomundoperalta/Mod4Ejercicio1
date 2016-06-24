@@ -99,7 +99,7 @@
             android:layout_height="wrap_content" />
          <Button
             android:layout_weight="1"
-            android:text="@string/end"
+            android:text="@string/termino"
             android:id="@+id/login_btnEnd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
