@@ -5,6 +5,8 @@ import android.content.IntentFilter;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
@@ -64,6 +66,23 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
         wUltimoLogin = (TextView) findViewById(R.id.fechaUltimoLogin);
         wTextUltimoLogin = (TextView) findViewById(R.id.campoUltimmoLogin);
         tdv = (TextView) findViewById(R.id.tdv);
+        wUser.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                wTextUltimoLogin.setVisibility(View.INVISIBLE);
+                wUltimoLogin.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
     @Override
@@ -75,10 +94,13 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
         String fechaHora = p.getStringItem(FECHA_HORA);
         wUser.setText(user != null ? user : "");
         wUltimoLogin.setText(user != null ? fechaHora : "");
-        if (user == null)
+        if (user == null) {
             wTextUltimoLogin.setVisibility(View.INVISIBLE);
-        else
+            wUltimoLogin.setVisibility(View.INVISIBLE);
+        } else {
             wTextUltimoLogin.setVisibility(View.VISIBLE);
+            wUltimoLogin.setVisibility(View.VISIBLE);
+        }
         // el password siempre va en blanco
         wPassword.setText("");
         long lTdv = p.getLong(ManejoTiempoDeVida.TIEMPO_DE_VIDA);
