@@ -39,6 +39,7 @@ public class Activity_Fragmentos extends AppCompatActivity implements View.OnCli
         user = getIntent().getExtras().getString("usuario");
         findViewById(R.id.fragmentos_btnfragmentos1).setOnClickListener(this);
         findViewById(R.id.fragmentos_btnfragmentos2).setOnClickListener(this);
+        findViewById(R.id.btnLogOut).setOnClickListener(this);
         txtTimer = (TextView) findViewById(R.id.txtTimer);
     }
 
@@ -51,6 +52,9 @@ public class Activity_Fragmentos extends AppCompatActivity implements View.OnCli
                 break;
             case R.id.fragmentos_btnfragmentos2:
                 processFragmento2();
+                break;
+            case R.id.btnLogOut:
+                finish();
                 break;
         }
     }

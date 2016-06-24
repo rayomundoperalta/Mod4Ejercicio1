@@ -84,6 +84,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <Button
+            android:textAllCaps="false"
             android:id="@+id/btnRegisterLogin"
             android:text="@string/Register"
             android:visibility="visible"
@@ -98,6 +99,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
          <Button
+            android:textAllCaps="false"
             android:layout_weight="1"
             android:text="@string/termino"
             android:id="@+id/login_btnEnd"

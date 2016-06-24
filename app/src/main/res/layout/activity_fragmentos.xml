@@ -12,7 +12,7 @@
     <TextView
         android:layout_margin="16dp"
         android:gravity="right"
-        android:textSize="18sp"
+        android:textSize="10sp"
         android:id="@+id/txtTimer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -21,15 +21,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <Button
+            android:textAllCaps="false"
             android:id="@+id/fragmentos_btnfragmentos1"
             android:text="@string/fragmentos_uno"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <Button
+            android:textAllCaps="false"
             android:id="@+id/fragmentos_btnfragmentos2"
             android:text="@string/fragmentos_dos"
             android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/btnLogOut"
+            android:text="@string/logout"
+            android:layout_weight="1"
+            android:textAllCaps="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>

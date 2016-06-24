@@ -9,12 +9,14 @@
     <string name="fechaUltimoLogin">Last Login</string>
     <string name="RecordarLogin">Remenber Login</string>
     <string name="Registro">Register</string>
-    <string name="termino">Log Out</string>
+    <string name="termino">End</string>
     <string name="usuarioYaExiste">Username already in DB</string>
     <string name="usuarioNoRegistrado">Unkown user</string>
     <string name="passwordInvalido">Invalid user or password</string>
-    <string name="end">END</string>
+    <string name="end">End</string>
     <string name="duracionSesion">Session lenght %s seconds</string>
     <string name="lifespan">Use time</string>
     <string name="segundos">seg</string>
+    <string name="logout">Log Out</string>
+    <string name="boton_add">Add</string>
 </resources>
